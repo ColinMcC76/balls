@@ -2,9 +2,9 @@
 const para3 = document.getElementById("total");
 const para1 = document.getElementById("goodCount");
 const para2 = document.getElementById("evilCount");
-var total= 100
+var total = 100
 let count1 = 0;
-let count2= 0;
+let count2 = 0;
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -18,6 +18,7 @@ function random(min, max) {
     const num = Math.floor(Math.random() * (max - min)) + min;
     return num;
 }
+
 function Shape(x, y, velX, velY, exists) {
     this.x = x
     this.y = y
@@ -44,13 +45,13 @@ function Circle(x, y, velX, velY, exists, color, size) {
 }
 Circle.prototype = Object.create(Shape.prototype);
 // function to draw the balls
-Ball.prototype.draw = function () {
+Ball.prototype.draw = function() {
     ctx.beginPath();
     ctx.fillStyle = this.color;
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
     ctx.fill();
 }
-Circle.prototype.draw = function () {
+Circle.prototype.draw = function() {
     ctx.beginPath();
     ctx.strokeStyle = this.color;
     ctx.lineWidth = 3;
@@ -58,11 +59,11 @@ Circle.prototype.draw = function () {
     ctx.stroke();
 }
 
-Circle.prototype.setControls = function (array) {
+Circle.prototype.setControls = function(array) {
     let evil_ball = array[0];
     let good_ball = array[1];
     // console.log("red")
-    window.onkeydown = function (e) {
+    window.onkeydown = function(e) {
         // if (_this.color == "red") {
         if (e.key === 'j') {
             good_ball.x -= good_ball.velX;
@@ -89,7 +90,7 @@ Circle.prototype.setControls = function (array) {
 
 
 // updates the balls position 
-Ball.prototype.update = function () {
+Ball.prototype.update = function() {
     // if ((this.x + this.size) >= width) {
     //     this.velX = -(this.velX);
     // }
@@ -103,24 +104,24 @@ Ball.prototype.update = function () {
     //     this.velY = -(this.velY);
     // }
     if ((this.x + this.size) >= width) {
-        this.x = 0+this.size+5;
+        this.x = 0 + this.size + 5;
     }
     if ((this.x - this.size) <= 0) {
         // this.velX = -(this.velX);
-        this.x = width-this.size-5
+        this.x = width - this.size - 5
     }
     if ((this.y + this.size) >= height) {
         // this.velY = -(this.velY);
-        this.y = 0+this.size+5;
+        this.y = 0 + this.size + 5;
     }
     if ((this.y - this.size) <= 0) {
         // this.velY = -(this.velY);
-        this.y = height-this.size-5
+        this.y = height - this.size - 5
     }
     this.x += this.velX;
     this.y += this.velY;
 }
-Ball.prototype.collisionDetect = function () {
+Ball.prototype.collisionDetect = function() {
     for (let j = 0; j < balls.length; j++) {
         if (!(this === balls[j])) {
             const dx = this.x - balls[j].x;
@@ -128,32 +129,32 @@ Ball.prototype.collisionDetect = function () {
             const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < this.size + balls[j].size) {
                 // balls[j].color = this.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
-                balls[j].size = random(5,20)
+                balls[j].size = random(5, 20)
             }
         }
     }
 }
 
-Circle.prototype.checkbounds = function () {
+Circle.prototype.checkbounds = function() {
     if ((this.x + this.size) >= width) {
-        this.x = 0+this.size+5;
+        this.x = 0 + this.size + 5;
     }
     if ((this.x - this.size) <= 0) {
         // this.velX = -(this.velX);
-        this.x = width-this.size-5
+        this.x = width - this.size - 5
     }
     if ((this.y + this.size) >= height) {
         // this.velY = -(this.velY);
-        this.y = 0+this.size+5;
+        this.y = 0 + this.size + 5;
     }
     if ((this.y - this.size) <= 0) {
         // this.velY = -(this.velY);
-        this.y = height-this.size-5
+        this.y = height - this.size - 5
     }
 }
-Circle.prototype.collisionDetect = function (array) {
-    let evilBall= arr[0]
-    let goodBall= arr[1]
+Circle.prototype.collisionDetect = function(array) {
+    let evilBall = arr[0]
+    let goodBall = arr[1]
     for (let j = 0; j < balls.length; j++) {
         if (balls[j].exists) {
             var dx = evilBall.x - balls[j].x;
@@ -186,7 +187,7 @@ let arr = [good, evil]
 evil.setControls(arr);
 good.setControls(arr);
 // creates 25 balls to display on the screen 
-while (balls.length < 100) {
+while (balls.length < 25) {
     let size = random(10, 20);
     let ball = new Ball(
         // ball position always drawn at least one ball width
@@ -205,7 +206,7 @@ while (balls.length < 100) {
 function loop() {
     // evil.setControls();
     // good.setControls();
-    ctx.fillStyle = 'rgba(0, 0, 0, .25)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 1)';
     ctx.fillRect(0, 0, width, height);
     for (let i = 0; i < balls.length; i++) {
         if (balls[i].exists) {
